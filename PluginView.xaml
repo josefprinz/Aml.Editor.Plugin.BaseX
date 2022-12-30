@@ -54,9 +54,12 @@
             BorderBrush="{DynamicResource MahApps.Brushes.Flyout.Foreground}"
             BorderThickness="0,1,0,0">
             <TextBlock Margin="20" TextWrapping="Wrap">
-                <Run>This plugin allow to connect to an AutomationML BaseX database and to transfer AutomationML model data to the AutomationML editor.</Run>
+                <Run>This plugin allows to connect to an AutomationML BaseX database and to transfer AutomationML model data to the AutomationML editor.</Run>
                 <LineBreak />
-                <Run>This is the first draft of the plugin.</Run>
+                <Run>This is the first draft of the plugin. It is a current development. Progress is reported in my </Run>
+                <Hyperlink NavigateUri="https://berlin-prinz.de" RequestNavigate="Hyperlink_RequestNavigate">
+                    Blog
+                </Hyperlink>
             </TextBlock>
         </Border>
     </Grid>

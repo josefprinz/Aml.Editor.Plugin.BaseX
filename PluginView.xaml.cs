@@ -8,6 +8,7 @@ using Aml.Toolkit.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -34,7 +35,7 @@ namespace Aml.Editor.Plugin.BaseX
             IsReactive = true;
 
             PaneImage = new BitmapImage(
-                new Uri("pack://application:,,,/Aml.Editor.Plugin.BaseX;component/Plugin.png"));
+                new Uri("pack://application:,,,/Aml.Editor.Plugin.BaseX;component/AMLBaseX.png"));
         }
 
         #endregion Constructors
@@ -87,5 +88,12 @@ namespace Aml.Editor.Plugin.BaseX
 
 
         #endregion Methods
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) 
+            { UseShellExecute = true});
+            e.Handled = true;
+        }
     }
 }
