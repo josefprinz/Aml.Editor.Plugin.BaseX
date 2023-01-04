@@ -17,8 +17,8 @@
 
     <mah:MetroWindow.IconTemplate>
         <DataTemplate>
-            <Grid>
-                <icons:Material Kind="Database" />
+            <Grid VerticalAlignment="Center" Margin="3">
+                <icons:Material  Kind="Database" />
             </Grid>
         </DataTemplate>
            
