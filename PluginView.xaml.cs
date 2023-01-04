@@ -25,11 +25,14 @@ namespace Aml.Editor.Plugin.BaseX
     [Export(typeof(IAMLEditorView))]
     public partial class PluginView : PluginViewBase, ISupportsUIZoom, ISupportsThemes
     {
+        #region Fields
 
         /// <summary>
         ///     <see cref="AboutCommand" />
         /// </summary>
         private RelayCommand<object>? aboutCommand;
+
+        #endregion Fields
 
         #region Constructors
 
@@ -52,6 +55,7 @@ namespace Aml.Editor.Plugin.BaseX
 
         #endregion Constructors
 
+        #region Properties
 
         /// <summary>
         ///     The AboutCommand - Command
@@ -59,37 +63,17 @@ namespace Aml.Editor.Plugin.BaseX
         /// <value>The about command.</value>
         public RelayCommand<object> AboutCommand => aboutCommand ??= new RelayCommand<object>(AboutCommandExecute, AboutCommandCanExecute);
 
-        /// <summary>
-        ///     Test, if the <see cref="AboutCommand" /> can execute.
-        /// </summary>
-        /// <param name="parameter">TODO The parameter.</param>
-        /// <returns>true, if command can execute</returns>
-        private bool AboutCommandCanExecute(object parameter)
-        {
-            return true;
-        }
-
-        /// <summary>
-        ///     The <see cref="AboutCommand" /> Execution Action.
-        /// </summary>
-        /// <param name="parameter">TODO The parameter.</param>
-        private void AboutCommandExecute(object parameter)
-        {
-            var dialog = new About { Owner = Application.Current.MainWindow };
-            _ = dialog.ShowDialog();
-        }
-
-        #region Properties
+        public override bool CanClose => true;
 
         public override DockPositionEnum InitialDockPosition => DockPositionEnum.DockRight;
-
-        public override bool CanClose => true;
 
         /// <summary>
         /// It is recommended to give all plugins a package name with the prefix Aml.Editor.Plugin.
         /// The package name is used as the ID of the plugin and should be unique.
         /// </summary>
         public override string PackageName => "Aml.Editor.Plugin.BaseX";
+
+        private PluginViewModel ViewModel => (PluginViewModel)DataContext;
 
         #endregion Properties
 
@@ -125,8 +109,6 @@ namespace Aml.Editor.Plugin.BaseX
             }
         }
 
-        private PluginViewModel ViewModel => (PluginViewModel)DataContext;
-
         /// <summary>
         /// Eventhandler for the zoom factor changed event.
         /// </summary>
@@ -136,8 +118,25 @@ namespace Aml.Editor.Plugin.BaseX
             ViewModel.ZoomFactor = zoomFactor;
         }
 
-        #endregion Methods
+        /// <summary>
+        ///     Test, if the <see cref="AboutCommand" /> can execute.
+        /// </summary>
+        /// <param name="parameter">TODO The parameter.</param>
+        /// <returns>true, if command can execute</returns>
+        private bool AboutCommandCanExecute(object parameter)
+        {
+            return true;
+        }
 
+        /// <summary>
+        ///     The <see cref="AboutCommand" /> Execution Action.
+        /// </summary>
+        /// <param name="parameter">TODO The parameter.</param>
+        private void AboutCommandExecute(object parameter)
+        {
+            var dialog = new About { Owner = Application.Current.MainWindow };
+            _ = dialog.ShowDialog();
+        }
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri)
@@ -149,9 +148,12 @@ namespace Aml.Editor.Plugin.BaseX
         {
             var view = new SettingsView
             {
+                Owner = Application.Current.MainWindow,
                 DataContext = ViewModel.SettingsViewModel
             };
             view.ShowDialog();
         }
+
+        #endregion Methods
     }
 }

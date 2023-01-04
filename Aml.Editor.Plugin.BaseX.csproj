@@ -57,6 +57,7 @@
 		<Private>false</Private>
 		<ExcludeAssets>runtime</ExcludeAssets>
 	  </PackageReference>
+    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
     <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0">
 		<Private>false</Private>
 		<ExcludeAssets>runtime</ExcludeAssets>

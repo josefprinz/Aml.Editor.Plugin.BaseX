@@ -162,7 +162,7 @@ namespace Aml.Editor.Plugin.BaseX.ViewModel
 
             if (!string.IsNullOrEmpty(Database))
             {
-                PluginViewModel.LoadDocuments.Execute (null);
+                PluginViewModel.LoadDocumentsCommand.Execute (null);
             }
         }
 

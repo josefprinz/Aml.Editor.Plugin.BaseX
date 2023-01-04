@@ -3,14 +3,26 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Aml.Editor.Plugin.BaseX.View"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:Aml.Editor.Plugin.BaseX.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:SettingsViewModel}"
-    SizeToContent="WidthAndHeight"
     ResizeMode="NoResize"
+    ShowIconOnTitleBar="True"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
+
+    <mah:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Grid>
+                <icons:Material Kind="Database" />
+            </Grid>
+        </DataTemplate>
+           
+    </mah:MetroWindow.IconTemplate>
 
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
@@ -25,7 +37,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Margin="8" Grid.IsSharedSizeScope="True">
@@ -95,22 +107,20 @@
                 Margin="8,8,0,0"
                 mah:PasswordBoxBindingBehavior.Password="{Binding Password}"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.UseFloatingWatermark="True"
-                mah:TextBoxHelper.Watermark="Password"
                 Password="Password"
                 Style="{DynamicResource MahApps.Styles.PasswordBox.Win8}" />
 
             <DataGrid
-                Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"
                 x:Name="AzureDataGrid"
                 Grid.Row="4"
                 Grid.ColumnSpan="2"
                 Margin="8,8,0,10"
-                SelectedItem="{Binding SelectedDatabase}"
                 AutoGenerateColumns="False"
                 ItemsSource="{Binding Path=Databases}"
                 RowHeaderWidth="0"
-                Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
+                SelectedItem="{Binding SelectedDatabase}"
+                Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
+                Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Name}" Header="Database" />
                     <DataGridTextColumn Binding="{Binding Size}" Header="Size" />
