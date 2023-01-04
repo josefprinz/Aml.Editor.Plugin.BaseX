@@ -1,0 +1,169 @@
+﻿<mah:MetroWindow
+    x:Class="Aml.Editor.Plugin.BaseX.View.About"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="510"
+    ShowInTaskbar="False"
+    SizeToContent="Height"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+            
+            <Style x:Key="Heading1" TargetType="TextBlock" BasedOn="{StaticResource MahApps.Styles.TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="30" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+            </Style>
+
+            <Style x:Key="Heading2" TargetType="TextBlock" BasedOn="{StaticResource MahApps.Styles.TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+            </Style>
+
+            <Style x:Key="Title" TargetType="TextBlock" BasedOn="{StaticResource MahApps.Styles.TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe UI Light" />
+                <Setter Property="FontSize" Value="23" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+            </Style>
+
+            <Style x:Key="Small" TargetType="TextBlock" BasedOn="{StaticResource MahApps.Styles.TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="10" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+            </Style>
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
+
+
+    <Grid>
+        <Border>
+            <ScrollViewer>
+                <StackPanel MinWidth="200">
+
+                    <TextBlock
+                        Margin="10,5"
+                        Style="{StaticResource Heading2}"
+                        Text="About AMLBaseX" />
+
+                    <StackPanel Margin="10,5,0,8" Orientation="Horizontal">
+                        <Image Margin="10,0" Width="60" Source="/Aml.Editor.Plugin.BaseX;component/AMLBaseX.png"></Image>
+                        <TextBlock Width="400"                           
+                            Text="AutomationML Editor Plugin to visualize and edit AutomationML documents with the AutomationML editor, loaded from a BaseX AutomationML database."
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <TextBlock Margin="10,5,0,8">
+                        <Run FontWeight="Bold" Text="Version " />
+                        <Run Text="{Binding Version, Mode=OneWay}" />
+                    </TextBlock>
+                    <Border Margin="0,2,0,2" BorderThickness="0,2,0,0">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Offset="0" Color="Black" />
+                                <GradientStop Offset="1" Color="#FFF5F3F3" />
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                    </Border>
+
+                   
+                    <StackPanel>
+                        <Border Margin="0,2,0,2" BorderThickness="0,2,0,0">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Offset="0" Color="Black" />
+                                    <GradientStop Offset="1" Color="#FFF5F3F3" />
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                        </Border>
+
+                        <TextBlock Margin="10,5,0,0">
+                            <Run FontWeight="Bold" Text="Note for use" />
+                        </TextBlock>
+
+                        <TextBlock Margin="10,5,5,8" TextWrapping="Wrap">
+                            <Run Text="This plugin is not intended for productive use. It is an ongoing development that demonstrates the procedure for implementing plugins for the AutomationML Editor. The current state of development will be reported on " />
+                            <Hyperlink
+                                NavigateUri="https://josefprinz.github.io/automationml/2022/12/29/Setting-up-the-development-environment-for-AMLBaseX/"
+                                RequestNavigate="Hyperlink_RequestNavigate">
+                                Josef Prinz's blog.
+                            </Hyperlink>
+                        </TextBlock>
+
+                        <Border Margin="0,2,0,2" BorderThickness="0,2,0,0">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Offset="0" Color="Black" />
+                                    <GradientStop Offset="1" Color="#FFF5F3F3" />
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                        </Border>
+
+                        <TextBlock Margin="10,5,5,8" TextWrapping="Wrap">
+                            <Run Text="The software was created with the " />
+                            <Hyperlink
+                                NavigateUri="https://mahapps.com/"
+                                RequestNavigate="Hyperlink_RequestNavigate">
+                                MahApps.Metro Modern UI Framework
+                            </Hyperlink>
+                            <Run Text="licensed by " />
+                            <Hyperlink
+                                Foreground="Green"
+                                NavigateUri="https://github.com/MahApps/MahApps.Metro/blob/develop/LICENSE"
+                                RequestNavigate="Hyperlink_RequestNavigate">
+                                MIT License.
+                            </Hyperlink>
+                            <Run Text="For the realization of the AutomationML database the XML database engine "></Run>
+                            <Hyperlink
+                                NavigateUri="https://basex.org/"
+                                RequestNavigate="Hyperlink_RequestNavigate">
+                                BaseX
+                            </Hyperlink>
+                            <Run Text="is used, which is open source published under the terms of the " />
+                            <Hyperlink
+                                Foreground="Green"
+                                NavigateUri="https://github.com/BaseXdb/basex/blob/main/LICENSE"
+                                RequestNavigate="Hyperlink_RequestNavigate">
+                                3-clause BSD License.
+                            </Hyperlink>
+                        </TextBlock>
+
+                        <Border Margin="0,2,0,2" BorderThickness="0,2,0,0">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Offset="0" Color="Black" />
+                                    <GradientStop Offset="1" Color="#FFF5F3F3" />
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                        </Border>
+
+                        <TextBlock Margin="10,5,5,8" TextWrapping="Wrap">
+                            <Run Text="Copyright for the plugin is owned by " />
+                            <Run FontWeight="Bold" Text="Josef Prinz." />
+                            <Run Text="However, " />
+                            <Run FontWeight="Bold" Text="Josef Prinz" />
+                            <Run Text="does not assume any liability and warranty for this software. Liability for consequential damages is also excluded." />
+                        </TextBlock>
+                    </StackPanel>
+
+                    <Border BorderBrush="Gray" BorderThickness="0,2,0,0">
+                        <Button
+                            x:Name="CloseBtn"
+                            Width="80"
+                            Margin="10"
+                            HorizontalAlignment="Right"
+                            Click="Close_Click">
+                            Close
+                        </Button>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</mah:MetroWindow>

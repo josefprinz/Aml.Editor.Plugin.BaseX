@@ -1,6 +1,7 @@
 // Copyright (c) 2022 AutomationML and Contributors. All rights reserved.
 // Licensed to the AutomationML association under one or more agreements.
 // The AutomationML association licenses this file to you under the MIT license.
+
 using System.Windows;
 
 [assembly: ThemeInfo(

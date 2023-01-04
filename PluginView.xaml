@@ -7,13 +7,14 @@
     xmlns:amlTree="http://www.automationml.org/amlTool/"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Aml.Editor.Plugin.BaseX"
+    xmlns:vm="clr-namespace:Aml.Editor.Plugin.BaseX.ViewModel"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=vm:PluginViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-
-    <aml:PluginControlBase.Resources>
+    <aml:PluginViewBase.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/MahApps.Metro;component/Styles/Controls.xaml" />
@@ -34,11 +35,15 @@
                 </DrawingImage.Drawing>
             </DrawingImage>
         </ResourceDictionary>
-    </aml:PluginControlBase.Resources>
+    </aml:PluginViewBase.Resources>
 
     <Grid>
+        <Grid.LayoutTransform>
+            <ScaleTransform ScaleX="{Binding ZoomFactor}" ScaleY="{Binding ZoomFactor}" />
+        </Grid.LayoutTransform>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="28" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -46,7 +51,42 @@
         <!--<Button Width="20">
             <Image Source="{StaticResource PluginIcon}"></Image>
         </Button>-->
-      
+        <Border
+            x:Name="HeaderBorder"
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Style="{DynamicResource WindowToolBarBorderStyle}">
+            <Grid>
+                <Button x:Name="SettingsBtn" Click="SettingsBtn_Click"
+                        Style="{DynamicResource MahApps.Styles.Button.ToolBar}"
+                        HorizontalAlignment="Right" >
+                    <Image Source="{DynamicResource AMLSettingsIcon}"></Image>
+                </Button>
+            </Grid>
+        </Border>
+
+        <TabControl Grid.Row="1" Style="{StaticResource MahApps.Styles.TabControl}"
+                    mah:TabControlHelper.UnderlinePlacement="Bottom"
+                    mah:TabControlHelper.Underlined="TabPanel">
+            <TabItem Style="{StaticResource MahApps.Styles.TabItem}"
+                     mah:HeaderedControlHelper.HeaderFontSize="14" Header="Documents">
+
+                <DataGrid
+                x:Name="AzureDataGrid"
+                Margin="8,8,0,10"
+                SelectedItem="{Binding SelectedDocument}"
+                AutoGenerateColumns="False"
+                ItemsSource="{Binding Path=Documents}"
+                RowHeaderWidth="0"
+                Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Document" />
+                        <DataGridTextColumn Binding="{Binding Size}" Header="Size" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+        
         <Border
             Grid.Row="2"
             Margin="0,5"
@@ -57,7 +97,7 @@
                 <Run>This plugin allows to connect to an AutomationML BaseX database and to transfer AutomationML model data to the AutomationML editor.</Run>
                 <LineBreak />
                 <Run>This is the first draft of the plugin. It is a current development. Progress is reported in my </Run>
-                <Hyperlink NavigateUri="https://berlin-prinz.de" RequestNavigate="Hyperlink_RequestNavigate">
+                <Hyperlink NavigateUri="https://josefprinz.github.io/automationml/2022/12/29/Setting-up-the-development-environment-for-AMLBaseX/" RequestNavigate="Hyperlink_RequestNavigate">
                     Blog
                 </Hyperlink>
             </TextBlock>

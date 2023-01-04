@@ -2,7 +2,15 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="View\SettingsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="PluginView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\SettingsView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

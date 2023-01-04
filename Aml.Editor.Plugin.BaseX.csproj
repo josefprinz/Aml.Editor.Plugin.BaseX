@@ -29,6 +29,7 @@
     <None Remove="AML.png" />
     <None Remove="AMLBaseX.png" />
     <None Remove="Plugin.png" />
+    <None Remove="ViewModel\PluginViewModel.cs~RF1062ace.TMP" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +61,10 @@
 		<Private>false</Private>
 		<ExcludeAssets>runtime</ExcludeAssets>
 	  </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Aml.Engine.BaseX\Aml.Engine.Services.BaseX\Aml.Engine.Services.BaseX.csproj" />
   </ItemGroup>
 
   <ItemGroup>
