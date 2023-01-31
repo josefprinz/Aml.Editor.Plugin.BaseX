@@ -29,6 +29,10 @@
     <None Remove="AML.png" />
     <None Remove="AMLBaseX.png" />
     <None Remove="Plugin.png" />
+    <None Remove="Resources\Dark\XMLMode.xshd" />
+    <None Remove="Resources\Dark\XQuery.xshd" />
+    <None Remove="Resources\Light\XMLMode.xshd" />
+    <None Remove="Resources\Light\XQuery.xshd" />
     <None Remove="ViewModel\PluginViewModel.cs~RF1062ace.TMP" />
   </ItemGroup>
 
@@ -37,22 +41,14 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Aml.Editor.Plugin.Contract" Version="4.0.0">
-		  <Private>false</Private>
-		  <ExcludeAssets>runtime</ExcludeAssets>
-	  </PackageReference>
-    <PackageReference Include="Aml.Engine" Version="3.0.2">
-		<Private>false</Private>
-		<ExcludeAssets>runtime</ExcludeAssets>
-	  </PackageReference>
-    <PackageReference Include="Aml.Skins" Version="2.0.0">
-		<Private>false</Private>
-		<ExcludeAssets>runtime</ExcludeAssets>
-	  </PackageReference>
-    <PackageReference Include="Aml.Toolkit" Version="4.0.2">
-		<Private>false</Private>
-		<ExcludeAssets>runtime</ExcludeAssets>
-	  </PackageReference>
+    <EmbeddedResource Include="Resources\Dark\XMLMode.xshd" />
+    <EmbeddedResource Include="Resources\Dark\XQuery.xshd" />
+    <EmbeddedResource Include="Resources\Light\XMLMode.xshd" />
+    <EmbeddedResource Include="Resources\Light\XQuery.xshd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.2.0.78" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9">
 		<Private>false</Private>
 		<ExcludeAssets>runtime</ExcludeAssets>
@@ -65,7 +61,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Aml.Editor.API\Aml.Editor.API\Aml.Editor.API.csproj" />
+    <ProjectReference Include="..\..\Aml.Editor.API\Aml.Editor.Plugin\Aml.Editor.Plugin.Contract.csproj" />
     <ProjectReference Include="..\..\Aml.Engine.BaseX\Aml.Engine.Services.BaseX\Aml.Engine.Services.BaseX.csproj" />
+    <ProjectReference Include="..\..\Aml.Engine\Aml.Engine.Services\Aml.Engine.Services.csproj" />
+    <ProjectReference Include="..\..\Aml.Engine\Aml.Engine\Aml.Engine.csproj" />
+    <ProjectReference Include="..\..\AMLEditorSkins\Aml.Skins.csproj" />
+    <ProjectReference Include="..\..\AMLToolkit\Aml.Toolkit\Aml.Toolkit.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,6 +10,7 @@
     xmlns:local="clr-namespace:Aml.Editor.Plugin.BaseX"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Aml.Editor.Plugin.BaseX.View"
     xmlns:vm="clr-namespace:Aml.Editor.Plugin.BaseX.ViewModel"
     d:DataContext="{d:DesignInstance Type=vm:PluginViewModel}"
     d:DesignHeight="450"
@@ -68,9 +69,38 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Margin="2,0" Grid.Column="0" ToolTip="Edit selected document" Style="{DynamicResource MahApps.Styles.Button.ToolBar}">
-                    <icons:Material Kind="FileEdit" ></icons:Material>
-                </Button>
+                <mah:SplitButton
+                    Margin="3,0"
+                    Command="{Binding EditSelectedDocumentCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.Text}"
+                    Orientation="Horizontal"
+                    SelectedIndex="1"
+                    SelectionChanged="SplitButton_SelectionChanged"
+                    ToolTip="Edit selected document">
+                    <mah:SplitButton.Style>
+                        <Style TargetType="{x:Type mah:SplitButton}">
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Style.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True" />
+                                        <Condition Property="IsEnabled" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <!--<Setter TargetName="PART_Button" Property="BorderThickness" Value="1,1,0,1" />-->
+                                </MultiTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </mah:SplitButton.Style>
+                    <mah:SplitButton.Icon>
+                        <icons:Material Kind="FileEdit" />
+                    </mah:SplitButton.Icon>
+                    <mah:SplitButton.Items>
+                        <TextBlock Text="Partial" />
+                        <TextBlock Text="Complete" />
+                    </mah:SplitButton.Items>
+                </mah:SplitButton>
+
                 <Grid Grid.Column="8" HorizontalAlignment="Right">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -85,11 +115,12 @@
 
                     <Button
                         x:Name="SettingsBtn"
-                        Grid.Column="1" ToolTip="Connect to database"
+                        Grid.Column="1"
                         HorizontalAlignment="Right"
                         Click="SettingsBtn_Click"
-                        Style="{DynamicResource MahApps.Styles.Button.ToolBar}">
-                        <icons:Material Kind="Database"></icons:Material>
+                        Style="{DynamicResource MahApps.Styles.Button.ToolBar}"
+                        ToolTip="Connect to database">
+                        <icons:Material Kind="Database" />
                     </Button>
                 </Grid>
             </Grid>
@@ -111,9 +142,10 @@
                         <StackPanel Orientation="Horizontal">
                             <ContentPresenter VerticalAlignment="Center" Content="{Binding ElementName=DocHeader, Path=Header}" />
                             <Button
-                                Margin="2,0" ToolTip="Reload Documentlist"
+                                Margin="2,0"
                                 Command="{Binding ElementName=DocHeader, Path=DataContext.LoadDocumentsCommand}"
-                                Style="{DynamicResource MahApps.Styles.Button.ToolBar}">
+                                Style="{DynamicResource MahApps.Styles.Button.ToolBar}"
+                                ToolTip="Reload Documentlist">
                                 <icons:Material Width="12" Kind="Refresh" />
                             </Button>
                         </StackPanel>
@@ -131,10 +163,34 @@
                     SelectedItem="{Binding SelectedDocument}"
                     Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Name}" Header="Document" />
-                        <DataGridTextColumn Binding="{Binding Size}" Header="Size" />
+                        <DataGridTextColumn
+                            Binding="{Binding Name, Mode=OneWay}"
+                            Header="Document"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding Size, Mode=OneWay}"
+                            Header="Size"
+                            IsReadOnly="True" />
                     </DataGrid.Columns>
                 </DataGrid>
+            </TabItem>
+
+            <TabItem
+                x:Name="QueryHeader"
+                mah:HeaderedControlHelper.HeaderFontSize="14"
+                mah:HeaderedControlHelper.HeaderVerticalContentAlignment="Center"
+                Header="XQuery"
+                Style="{StaticResource MahApps.Styles.TabItem}">
+
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <ContentPresenter   VerticalAlignment="Center" Content="{Binding ElementName=QueryHeader, Path=Header}" />
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <view:XQueryView x:Name="QueryView" DataContext="{Binding QueryViewModel}" >
+                    
+                </view:XQueryView>
+
             </TabItem>
         </TabControl>
 
@@ -144,14 +200,25 @@
             Background="{DynamicResource MahApps.Brushes.Flyout.Background}"
             BorderBrush="{DynamicResource MahApps.Brushes.Flyout.Foreground}"
             BorderThickness="0,1,0,0">
-            <TextBlock Margin="20" TextWrapping="Wrap">
-                <Run>This plugin allows to connect to an AutomationML BaseX database and to transfer AutomationML model data to the AutomationML editor.</Run>
-                <LineBreak />
-                <Run>This is the first draft of the plugin. It is a current development. Progress is reported in my</Run>
-                <Hyperlink NavigateUri="https://josefprinz.github.io/automationml/2022/12/29/Setting-up-the-development-environment-for-AMLBaseX/" RequestNavigate="Hyperlink_RequestNavigate">
-                    Blog
-                </Hyperlink>
-            </TextBlock>
+            <mah:MetroAnimatedSingleRowTabControl mah:HeaderedControlHelper.HeaderFontSize="16">
+                <mah:MetroTabItem Header="Error List">
+                    <TextBlock
+                        Margin="10,5"
+                        Text="{Binding Error}"
+                        TextWrapping="Wrap" />
+                </mah:MetroTabItem>
+                <mah:MetroTabItem Header="Information">
+                    <TextBlock Margin="10,5" TextWrapping="Wrap">
+                        <Run>This plugin allows to connect to an AutomationML BaseX database and to transfer AutomationML model data to the AutomationML editor.</Run>
+                        <LineBreak />
+                        <Run>This is the first draft of the plugin. It is a current development. Progress is reported in my</Run>
+                        <Hyperlink NavigateUri="https://josefprinz.github.io/automationml/2022/12/29/Setting-up-the-development-environment-for-AMLBaseX/" RequestNavigate="Hyperlink_RequestNavigate">
+                            Blog
+                        </Hyperlink>
+
+                    </TextBlock>
+                </mah:MetroTabItem>
+            </mah:MetroAnimatedSingleRowTabControl>
         </Border>
     </Grid>
 </aml:PluginViewBase>

@@ -107,6 +107,8 @@ namespace Aml.Editor.Plugin.BaseX
                 // change the theme for the used mahapps.metro ui elements
                 ControlzEx.Theming.ThemeManager.Current.ChangeTheme(this, this.Resources, applicationTheme);
             }
+
+            QueryView.ChangeTheme();
         }
 
         /// <summary>
@@ -155,5 +157,10 @@ namespace Aml.Editor.Plugin.BaseX
         }
 
         #endregion Methods
+
+        private void SplitButton_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
