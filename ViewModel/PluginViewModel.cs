@@ -63,11 +63,9 @@ namespace Aml.Editor.Plugin.BaseX.ViewModel
         /// <summary>
         ///  Gets and sets the DocumentsBase
         /// </summary>
-        public string? DocumentsBase
-        {
-            get => SettingsViewModel.IsConnected ?
-                    SettingsViewModel.Database : "no database";
-        }
+        public string? DocumentsBase =>
+            SettingsViewModel.IsConnected ?
+                SettingsViewModel.Database : "no database";
 
         /// <summary>
         ///  The EditSelectedDocumentCommand - Command

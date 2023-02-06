@@ -33,8 +33,10 @@ namespace Aml.Editor.Plugin.BaseX.ViewModel
             this._pluginViewModel = pluginViewModel;
             XQueryDocument = new();
             QueryResultDocument = new();
+            ClearCommand = new(ClearCommandExecute);
             LoadQueryCommand = new(LoadQueryCommandExecute, LoadQueryCommandCanExecute);
             RunQueryCommand = new(RunQueryCommandExecute, RunQueryCommandCanExecute);
+            AddRootQueryCommand = new(AddRootQueryCommandExecute, AddRootQueryCommandCanExecute);
         }
 
         #endregion Constructors
@@ -46,12 +48,34 @@ namespace Aml.Editor.Plugin.BaseX.ViewModel
         /// </summary>
         public RelayCommand<object> LoadQueryCommand { get; }
 
+        public RelayCommand<object> ClearCommand { get; }
+
         public RelayCommand<object> RunQueryCommand { get; }
+
+        public RelayCommand<object> AddRootQueryCommand { get; }
+
+
+        private void AddRootQueryCommandExecute(object parameter)
+        {
+            if (XQueryDocument == null || _pluginViewModel == null || _pluginViewModel.SelectedDocument == null) 
+            { 
+                return; 
+            }
+            XQueryDocument.Text = $"let $root:= doc('{_pluginViewModel.SettingsViewModel.Database}/{_pluginViewModel.SelectedDocument.Name}')/CAEXFile";
+        }
+
+        private bool AddRootQueryCommandCanExecute(object parameter)
+        {
+            return IsConnected;
+        }
 
         private async void RunQueryCommandExecute(object parameter)
         {
             if (_pluginViewModel != null && IsConnected && XQueryDocument?.Text != null)
             { 
+                QueryResultDocument.Text = "";
+                _pluginViewModel.Error = "";
+
                 var result = await _pluginViewModel.Service.RunQueryAsync (_pluginViewModel.SettingsViewModel.Database, XQueryDocument.Text);
 
                 if (!string.IsNullOrEmpty(result )) 
@@ -62,6 +86,8 @@ namespace Aml.Editor.Plugin.BaseX.ViewModel
                 {
                     _pluginViewModel.Error = _pluginViewModel.Service.ErrorMessage;
                 }
+
+                RaisePropertyChanged (nameof(HasNoResult));
             }
         }
 
@@ -71,6 +97,11 @@ namespace Aml.Editor.Plugin.BaseX.ViewModel
         private bool RunQueryCommandCanExecute(object parameter)
         {
             return IsConnected && !HasNoQuery;
+        }
+
+        private void ClearCommandExecute(object parameter)
+        {
+            XQueryDocument.Text = string.Empty;
         }
 
         /// <summary>

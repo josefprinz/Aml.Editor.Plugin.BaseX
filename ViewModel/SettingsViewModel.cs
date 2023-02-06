@@ -89,10 +89,7 @@ namespace Aml.Editor.Plugin.BaseX.ViewModel
         /// <summary>
         ///  Gets and sets the Database
         /// </summary>
-        public string? Database
-        {
-            get => Databases?.Count > 0 ? SelectedDatabase.Name : null;
-        }
+        public string? Database => Databases?.Count > 0 ? SelectedDatabase.Name : null;
 
         /// <summary>
         ///  Gets and sets the IsConnected

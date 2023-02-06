@@ -1,20 +1,11 @@
-﻿using ControlzEx.Theming;
+﻿using Aml.Editor.Plugin.BaseX.ViewModel;
+using ControlzEx.Theming;
+using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
 
 namespace Aml.Editor.Plugin.BaseX.View
@@ -24,11 +15,40 @@ namespace Aml.Editor.Plugin.BaseX.View
     /// </summary>
     public partial class XQueryView : UserControl
     {
+        /// <summary>
+        ///     The folding manager
+        /// </summary>
+        private FoldingManager foldingManager;
+
+        /// <summary>
+        ///     The folding strategy
+        /// </summary>
+        private XmlFragmentFoldingStrategy foldingStrategy;
+
+
         public XQueryView()
         {
             InitializeComponent();
             ChangeTheme();
+
+            QueryResult.TextChanged += (o,s)=>UpdateFoldingManager();
+            QueryEdit.TextChanged += (o,s) =>
+                ViewModel.RaisePropertyChanged(nameof(XQueryViewModel.HasNoQuery));
         }
+
+        private void UpdateFoldingManager()
+        {
+            if (QueryResult.Document != null )
+            {
+                foldingManager ??= FoldingManager.Install(QueryResult.TextArea);
+                foldingStrategy ??= new XmlFragmentFoldingStrategy();
+                foldingStrategy.UpdateFoldings(foldingManager, QueryResult.Document);
+                ViewModel.RaisePropertyChanged(nameof(XQueryViewModel.HasNoResult));
+            }            
+        }
+
+        XQueryViewModel ViewModel => DataContext as XQueryViewModel;
+
 
         private void LoadHighlighting(string key)
         {

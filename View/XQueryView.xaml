@@ -46,13 +46,23 @@
                     <icons:Material Kind="OpenInApp" />
                 </Button>
 
-                <Button x:Name="RunQueryBtn"
+                <Button
+                    x:Name="RunQueryBtn"
                     Command="{Binding RunQueryCommand}"
                     Style="{DynamicResource MahApps.Styles.Button.ToolBar}"
                     ToolTip="Run query">
                     <icons:Material Kind="PlayCircleOutline" />
                 </Button>
-                <Button Style="{DynamicResource MahApps.Styles.Button.ToolBar}" ToolTip="Clear content">
+                <Button
+                    Command="{Binding AddRootQueryCommand}"
+                    Style="{DynamicResource MahApps.Styles.Button.ToolBar}"
+                    ToolTip="Add root query">
+                    <icons:Material Kind="Xml" />
+                </Button>
+                <Button
+                    Command="{Binding ClearCommand}"
+                    Style="{DynamicResource MahApps.Styles.Button.ToolBar}"
+                    ToolTip="Clear content">
                     <icons:Material Kind="Broom" />
                 </Button>
                 <Button Style="{DynamicResource MahApps.Styles.Button.ToolBar}" ToolTip="Save content">
