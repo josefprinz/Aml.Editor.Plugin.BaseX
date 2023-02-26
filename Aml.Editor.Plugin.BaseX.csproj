@@ -48,6 +48,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aml.Editor.API" Version="2.0.2" />
+    <PackageReference Include="Aml.Editor.Plugin.Contract" Version="4.0.2" />
+    <PackageReference Include="Aml.Engine" Version="3.1.1" />
     <PackageReference Include="AvalonEdit" Version="6.2.0.78" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9">
 		<Private>false</Private>
@@ -61,13 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Aml.Editor.API\Aml.Editor.API\Aml.Editor.API.csproj" />
-    <ProjectReference Include="..\..\Aml.Editor.API\Aml.Editor.Plugin\Aml.Editor.Plugin.Contract.csproj" />
     <ProjectReference Include="..\..\Aml.Engine.BaseX\Aml.Engine.Services.BaseX\Aml.Engine.Services.BaseX.csproj" />
-    <ProjectReference Include="..\..\Aml.Engine\Aml.Engine.Services\Aml.Engine.Services.csproj" />
-    <ProjectReference Include="..\..\Aml.Engine\Aml.Engine\Aml.Engine.csproj" />
-    <ProjectReference Include="..\..\AMLEditorSkins\Aml.Skins.csproj" />
-    <ProjectReference Include="..\..\AMLToolkit\Aml.Toolkit\Aml.Toolkit.csproj" />
   </ItemGroup>
 
   <ItemGroup>
