@@ -41,7 +41,6 @@ namespace Aml.Editor.Plugin.BaseX
             InitializeComponent();
             DisplayName = "AMLBaseX";
             IsReactive = true;
-            DataContext = new PluginViewModel();
             PaneImage = new BitmapImage(
                 new Uri("pack://application:,,,/Aml.Editor.Plugin.BaseX;component/AMLBaseX.png"));
 
@@ -88,6 +87,18 @@ namespace Aml.Editor.Plugin.BaseX
             }
         }
 
+        protected override void ActivateCommandExecute(object parameter)
+        {
+            base.ActivateCommandExecute(parameter);
+            DataContext = new PluginViewModel();
+        }
+
+        protected override void TerminateCommandExecute(object parameter)
+        {
+            base.TerminateCommandExecute(parameter);
+            (DataContext  as PluginViewModel)?.Dispose();
+        }
+
         /// <summary>
         /// The method is always called when the display mode is changed
         /// in the editor and when the plugin is activated.
@@ -117,6 +128,10 @@ namespace Aml.Editor.Plugin.BaseX
         /// <param name="zoomFactor"></param>
         public void OnUIZoomChanged(double zoomFactor)
         {
+            if (ViewModel == null)
+            {
+                return;
+            }
             ViewModel.ZoomFactor = zoomFactor;
         }
 
